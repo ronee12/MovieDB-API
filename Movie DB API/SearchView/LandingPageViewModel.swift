@@ -8,9 +8,10 @@
 import Foundation
 
 struct MovieModel {
-    let moviePosterUrl: String
-    let movieName: String
-    let movieDescription: String
+    let id: Int
+    let moviePosterUrl: String?
+    let movieName: String?
+    let movieDescription: String?
 }
 
 class LandingPageViewModel {
@@ -22,24 +23,29 @@ class LandingPageViewModel {
         self.interactor = MovieServiceManager()
     }
     
-    func getMovieList(searchText: String, completion: @escaping (Bool) -> Void) {
+    func getMovieList(searchText: String, completion: @escaping () -> Void) {
         dataCollection.removeAll()
+        if searchText.isEmpty {
+            completion()
+            return
+        }
+        
         interactor.getMovieList(with: searchText) { [weak self] result in
             guard let self = self else {
-                completion(false)
+                completion()
                 return
             }
             
             switch result {
             case .success(let movieData):
                 self.dataCollection = movieData.results.map ({
-                    return MovieModel(moviePosterUrl: $0.posterUrl, movieName: $0.originalTitle, movieDescription: $0.overview)
+                    return MovieModel(id: $0.id, moviePosterUrl: $0.posterUrl, movieName: $0.originalTitle, movieDescription: $0.overview)
                 })
-                completion(true)
+                completion()
                 
             case .failure(let error):
                 print("failed with error \(error.localizedDescription)")
-                completion(false)
+                completion()
             }
         }
     }

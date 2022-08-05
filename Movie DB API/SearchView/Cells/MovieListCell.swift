@@ -23,7 +23,6 @@ class MovieListCell: UITableViewCell {
     private lazy var movieNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "TimesNewRomanPSMT", size: 16)
-        label.text = "Captain Marvel"
         label.numberOfLines = 0
         return label
     }()
@@ -41,6 +40,7 @@ class MovieListCell: UITableViewCell {
         return view
     }()
     
+    private var movieId: Int = 0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -69,17 +69,33 @@ class MovieListCell: UITableViewCell {
     func configure(model: MovieModel) {
         movieNameLabel.text = model.movieName
         descriptionLabel.text = model.movieDescription
+        self.movieId = model.id
         
-        MovieServiceManager().loadWith(imageUrl: model.moviePosterUrl) { [weak self] result in
-            
-            switch result {
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.moviePosterView.image = image
+        if let moviePosterUrl = model.moviePosterUrl {
+            MovieServiceManager().loadWith(imageUrl: moviePosterUrl) { [weak self] result in
+                
+                guard let self = self else {
+                    return
                 }
-            case .failure(let error):
-                print("image fetching failed with error \(error.localizedDescription)")
+                
+                if self.movieId != model.id {
+                    return
+                }
+                
+                switch result {
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self.moviePosterView.image = image
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.moviePosterView.image  = UIImage(named: "placeHolderImage")
+                    }
+                    print("image fetching failed with error \(error.localizedDescription)")
+                }
             }
+        } else {
+            self.moviePosterView.image = UIImage(named: "placeHolderImage")
         }
     }
     

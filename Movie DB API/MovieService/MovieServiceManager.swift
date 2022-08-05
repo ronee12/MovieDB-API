@@ -14,9 +14,9 @@ protocol MovieServiceInteractor {
 
 struct MovieService: Decodable {
     let id: Int
-    let originalTitle: String
-    let overview: String
-    let posterUrl: String
+    let originalTitle: String?
+    let overview: String?
+    let posterUrl: String?
     
     enum CodingKeys: String, CodingKey {
         case id, overview
@@ -55,12 +55,10 @@ class MovieServiceManager {
     
     let apiKey: String = "38e61227f85671163c275f9bd95a8803"
     let baseUrl: String = "https://api.themoviedb.org/3/search/movie"
-    let fullUrl: String
     
     var cacheImage = NSCache<AnyObject, AnyObject>()
     
     init() {
-        fullUrl = "\(baseUrl)?api_key=\(apiKey)"
     }
     
     func loadWith(imageUrl: String, completion: @escaping (Result<UIImage, MovieServiceError>) -> Void) {
@@ -105,11 +103,15 @@ class MovieServiceManager {
 
 extension MovieServiceManager: MovieServiceInteractor {
     func getMovieList(with searchText: String, completion: @escaping (Result<MovieServiceResponse, MovieServiceError>) -> Void) {
-        let urlString = "\(fullUrl)&query=\(searchText)"
         
-        print("full url \(urlString)")
+        var urlComponent = URLComponents(string: baseUrl)
+        let queryItem = URLQueryItem(name: "query", value: searchText)
+        let apiKeyItem = URLQueryItem(name: "api_key", value: apiKey)
+        urlComponent?.queryItems = [apiKeyItem, queryItem]
         
-        guard let url = URL(string: urlString) else {
+        print("full url \(String(describing: urlComponent?.url?.absoluteString))")
+        
+        guard let url = urlComponent?.url else {
             completion(.failure(.urlParsingError))
             return
         }
