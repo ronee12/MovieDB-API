@@ -24,8 +24,8 @@ class LandingPageViewModel {
     }
     
     func getMovieList(searchText: String, completion: @escaping () -> Void) {
-        dataCollection.removeAll()
         if searchText.isEmpty {
+            dataCollection.removeAll()
             completion()
             return
         }
