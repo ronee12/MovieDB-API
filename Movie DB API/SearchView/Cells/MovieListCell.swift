@@ -69,6 +69,18 @@ class MovieListCell: UITableViewCell {
     func configure(model: MovieModel) {
         movieNameLabel.text = model.movieName
         descriptionLabel.text = model.movieDescription
+        
+        MovieServiceManager().loadWith(imageUrl: model.moviePosterUrl) { [weak self] result in
+            
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.moviePosterView.image = image
+                }
+            case .failure(let error):
+                print("image fetching failed with error \(error.localizedDescription)")
+            }
+        }
     }
     
     required init?(coder: NSCoder) {

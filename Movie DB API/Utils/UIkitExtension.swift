@@ -59,5 +59,4 @@ extension UIView {
         translatesAutoresizingMaskIntoConstraints = false
         centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
-    
 }

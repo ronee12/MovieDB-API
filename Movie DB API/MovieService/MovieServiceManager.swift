@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol MovieServiceInteractor {
     func getMovieList(with searchText: String, completion: @escaping (Result<MovieServiceResponse, MovieServiceError>) -> Void)
@@ -56,9 +57,50 @@ class MovieServiceManager {
     let baseUrl: String = "https://api.themoviedb.org/3/search/movie"
     let fullUrl: String
     
+    var cacheImage = NSCache<AnyObject, AnyObject>()
+    
     init() {
         fullUrl = "\(baseUrl)?api_key=\(apiKey)"
     }
+    
+    func loadWith(imageUrl: String, completion: @escaping (Result<UIImage, MovieServiceError>) -> Void) {
+        
+        let baseUrl: String = "https://image.tmdb.org/t/p/w185/"
+        let apiKey: String = "198b78b4f51aa9884d1bfdb61818f22c"
+        
+        let fullUrlString = "\(baseUrl)\(imageUrl)?api_key=\(apiKey)"
+        
+        let data = cacheImage.object(forKey: imageUrl as AnyObject) as? Data
+        
+        if let data = data, let image = UIImage(data: data) {
+            completion(.success(image))
+            return
+        }
+        
+        
+        guard let fullUrl = URL(string: fullUrlString) else {
+            completion(.failure(.urlParsingError))
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: fullUrl) { [weak self] (data, respons, error) in
+            
+            if let error = error {
+                completion(.failure(.responseError(error)))
+                return
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                completion(.failure(.dataNilError))
+                return
+            }
+            
+            self?.cacheImage.setObject(data as AnyObject, forKey: imageUrl as AnyObject)
+            completion(.success(image))
+        }
+        dataTask.resume()
+    }
+    
 }
 
 extension MovieServiceManager: MovieServiceInteractor {
