@@ -66,6 +66,10 @@ class MovieListCell: UITableViewCell {
         descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -5).isActive = true
     }
     
+    func configure(model: MovieModel) {
+        movieNameLabel.text = model.movieName
+        descriptionLabel.text = model.movieDescription
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -17,6 +17,8 @@
 		D6155174289D013500B50D23 /* Movie_DB_APIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6155173289D013500B50D23 /* Movie_DB_APIUITestsLaunchTests.swift */; };
 		D6155184289D06F400B50D23 /* UIkitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6155183289D06F400B50D23 /* UIkitExtension.swift */; };
 		D6155187289D077600B50D23 /* MovieListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6155186289D077600B50D23 /* MovieListCell.swift */; };
+		D6155189289D126900B50D23 /* LandingPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6155188289D126900B50D23 /* LandingPageViewModel.swift */; };
+		D615518C289D171F00B50D23 /* MovieServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D615518B289D171F00B50D23 /* MovieServiceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		D6155173289D013500B50D23 /* Movie_DB_APIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie_DB_APIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D6155183289D06F400B50D23 /* UIkitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIkitExtension.swift; sourceTree = "<group>"; };
 		D6155186289D077600B50D23 /* MovieListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCell.swift; sourceTree = "<group>"; };
+		D6155188289D126900B50D23 /* LandingPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageViewModel.swift; sourceTree = "<group>"; };
+		D615518B289D171F00B50D23 /* MovieServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServiceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 				D6155150289D013400B50D23 /* AppDelegate.swift */,
 				D6155152289D013400B50D23 /* SceneDelegate.swift */,
 				D6155180289D05E200B50D23 /* SearchView */,
+				D615518A289D130900B50D23 /* MovieService */,
 				D6155182289D06D900B50D23 /* Utils */,
 				D6155159289D013400B50D23 /* Assets.xcassets */,
 				D615515B289D013400B50D23 /* LaunchScreen.storyboard */,
@@ -134,6 +139,7 @@
 			children = (
 				D6155185289D076200B50D23 /* Cells */,
 				D6155154289D013400B50D23 /* LandingPageViewController.swift */,
+				D6155188289D126900B50D23 /* LandingPageViewModel.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -152,6 +158,14 @@
 				D6155186289D077600B50D23 /* MovieListCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		D615518A289D130900B50D23 /* MovieService */ = {
+			isa = PBXGroup;
+			children = (
+				D615518B289D171F00B50D23 /* MovieServiceManager.swift */,
+			);
+			path = MovieService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,7 +301,9 @@
 				D6155187289D077600B50D23 /* MovieListCell.swift in Sources */,
 				D6155155289D013400B50D23 /* LandingPageViewController.swift in Sources */,
 				D6155151289D013400B50D23 /* AppDelegate.swift in Sources */,
+				D6155189289D126900B50D23 /* LandingPageViewModel.swift in Sources */,
 				D6155184289D06F400B50D23 /* UIkitExtension.swift in Sources */,
+				D615518C289D171F00B50D23 /* MovieServiceManager.swift in Sources */,
 				D6155153289D013400B50D23 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
