@@ -75,7 +75,6 @@ class MovieServiceManager {
             return
         }
         
-        
         guard let fullUrl = URL(string: fullUrlString) else {
             completion(.failure(.urlParsingError))
             return
